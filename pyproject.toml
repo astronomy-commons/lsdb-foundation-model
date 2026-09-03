@@ -1,0 +1,46 @@
+[project]
+name = "aion-hats"
+version = "0.1.0"
+description = "Tokenize Multimodal Universe HATS catalogs (Hugging Face / LSDB) with the AION-1 codecs"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = [
+    "polymathic-aion>=0.0.2",
+    "torch>=2.4",
+    "huggingface_hub>=0.24",
+    "fsspec>=2024.2",
+    "safetensors",
+    "numpy",
+    "pyarrow>=16",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "jupyter",
+    "nbformat",
+    "matplotlib",
+    "ruff",
+    "datasets>=3.0",
+    "lsdb",
+]
+lsdb = ["lsdb"]
+
+[project.scripts]
+aion-hats = "aion_hats.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aion_hats"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: needs network access and the real AION codecs"]
